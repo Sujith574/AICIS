@@ -1,0 +1,105 @@
+{
+  "database": "aicis_db",
+  "collections": {
+    "users": {
+      "description": "Teacher/admin accounts",
+      "fields": {
+        "_id": "ObjectId",
+        "username": "string (unique)",
+        "email": "string (unique)",
+        "hashed_password": "string",
+        "role": "string (teacher|admin)",
+        "created_at": "datetime"
+      },
+      "indexes": [
+        { "field": "username", "unique": true },
+        { "field": "email", "unique": true }
+      ]
+    },
+    "students": {
+      "description": "Registered students with face encodings",
+      "fields": {
+        "_id": "ObjectId",
+        "student_id": "string (unique, e.g. STU001)",
+        "name": "string",
+        "email": "string",
+        "face_encoding_path": "string (path to .npy file)",
+        "training_image_paths": ["string"],
+        "registered_at": "datetime",
+        "registered_by": "string (teacher username)"
+      },
+      "indexes": [
+        { "field": "student_id", "unique": true }
+      ]
+    },
+    "sessions": {
+      "description": "Class sessions",
+      "fields": {
+        "_id": "ObjectId",
+        "session_id": "string (unique)",
+        "subject": "string",
+        "teacher": "string",
+        "started_at": "datetime",
+        "ended_at": "datetime | null",
+        "status": "string (active|ended)"
+      },
+      "indexes": [
+        { "field": "session_id", "unique": true },
+        { "field": "status" }
+      ]
+    },
+    "attendance": {
+      "description": "Per-session per-student attendance records",
+      "fields": {
+        "_id": "ObjectId",
+        "student_id": "string",
+        "session_id": "string",
+        "timestamp": "datetime",
+        "status": "string (present|absent)",
+        "confidence": "float (face recognition confidence 0-1)"
+      },
+      "indexes": [
+        { "field": "student_id" },
+        { "field": "session_id" },
+        { "compound": ["student_id", "session_id"], "unique": true }
+      ]
+    },
+    "engagement_logs": {
+      "description": "Per-frame engagement signals for each student in a session",
+      "fields": {
+        "_id": "ObjectId",
+        "student_id": "string",
+        "session_id": "string",
+        "timestamp": "datetime",
+        "attention_score": "float (0-100)",
+        "eye_aspect_ratio": "float",
+        "head_pitch": "float (degrees)",
+        "head_yaw": "float (degrees)",
+        "head_roll": "float (degrees)",
+        "gaze_score": "float (0-1)",
+        "blink_detected": "boolean"
+      },
+      "indexes": [
+        { "field": "student_id" },
+        { "field": "session_id" },
+        { "field": "timestamp" }
+      ]
+    },
+    "risk_predictions": {
+      "description": "Cached ML risk predictions per student",
+      "fields": {
+        "_id": "ObjectId",
+        "student_id": "string",
+        "computed_at": "datetime",
+        "attendance_pct": "float",
+        "avg_attention_score": "float",
+        "engagement_trend": "float (-1 to 1)",
+        "risk_level": "string (Low|Medium|High)",
+        "risk_probability": "float (0-1)"
+      },
+      "indexes": [
+        { "field": "student_id", "unique": true }
+      ]
+    }
+  }
+}
