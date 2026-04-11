@@ -17,12 +17,12 @@ router = APIRouter(tags=["WebSocket"])
 
 class ConnectionManager:
     def __init__(self):
-        # session_id → list of connected WebSockets
-        self.active: dict[str, list[WebSocket]] = {}
+        # session_id → set of connected WebSockets
+        self.active: dict[str, set[WebSocket]] = {}
 
     async def connect(self, ws: WebSocket, session_id: str):
         await ws.accept()
-        self.active.setdefault(session_id, []).append(ws)
+        self.active.setdefault(session_id, set()).add(ws)
 
     def disconnect(self, ws: WebSocket, session_id: str):
         if session_id in self.active:
@@ -30,7 +30,7 @@ class ConnectionManager:
 
     async def broadcast(self, session_id: str, data: dict):
         dead = []
-        for ws in self.active.get(session_id, []):
+        for ws in list(self.active.get(session_id, set())):
             try:
                 await ws.send_json(data)
             except Exception:
