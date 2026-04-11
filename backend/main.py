@@ -2,6 +2,12 @@
 AICIS FastAPI Application Entry Point
 """
 import os
+import sys
+import io
+
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv

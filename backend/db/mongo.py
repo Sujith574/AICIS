@@ -2,7 +2,7 @@
 MongoDB async client using Motor.
 All database access goes through this module.
 """
-from motor.motor_asyncio import AsyncIOMotorClient
+from mongomock_motor import AsyncMongoMockClient as AsyncIOMotorClient
 from pymongo import ASCENDING, DESCENDING
 from typing import Optional
 import os
