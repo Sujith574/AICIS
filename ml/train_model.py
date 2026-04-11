@@ -12,6 +12,11 @@ Run: python ml/train_model.py
 """
 import os
 import sys
+import io
+
+if sys.platform == "win32":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 import joblib
 import numpy as np
 import pandas as pd

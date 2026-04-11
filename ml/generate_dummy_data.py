@@ -7,6 +7,11 @@ Output: ml/training_data.csv
 import numpy as np
 import pandas as pd
 import os
+import sys
+
+if sys.platform == "win32":
+    import io
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 np.random.seed(42)
 N = 600
