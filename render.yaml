@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: aicis-backend
+    env: python
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "cd backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: MONGO_URI
+        value: "mongodb://localhost:27017" # This won't work on Render if no MongoDB, but we use Mock.
+      - key: MONGO_DB
+        value: "aicis_db"
+      - key: MODEL_PATH
+        value: "../../ml/model.pkl" # Correct path relative to backend/services/
+      - key: SCALER_PATH
+        value: "../../ml/scaler.pkl"
+      - key: PYTHONUTF8
+        value: "1"
