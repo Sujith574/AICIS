@@ -12,12 +12,10 @@ from datetime import datetime
 from typing import Optional, Tuple
 
 import cv2
-import mediapipe as mp
 import numpy as np
-
+from mediapipe.python.solutions import face_mesh as mp_face_mesh
 # ── MediaPipe setup ───────────────────────────────────────────────────────────
-_mp_face   = mp.solutions.face_mesh
-_face_mesh = _mp_face.FaceMesh(
+_face_mesh = mp_face_mesh.FaceMesh(
     static_image_mode=False,
     max_num_faces=1,
     refine_landmarks=True,   # enables iris landmarks
