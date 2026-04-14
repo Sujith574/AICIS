@@ -86,7 +86,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 > - **Username:** `teacher`
 > - **Password:** `teacher123`
 
-API docs: http://localhost:8000/docs
+API docs: https://aicis-backend.onrender.com/docs
 
 ---
 
@@ -188,7 +188,7 @@ Each webcam frame is analyzed for:
 
 ```javascript
 // Connect
-const ws = new WebSocket('ws://localhost:8000/ws/live-session/{session_id}');
+const ws = new WebSocket('wss://aicis-backend.onrender.com/ws/live-session/{session_id}');
 
 // Send frame every 2s
 ws.send(JSON.stringify({ frame_b64: "data:image/jpeg;base64,..." }));

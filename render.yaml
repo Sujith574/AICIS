@@ -15,3 +15,5 @@ services:
         value: "../../ml/scaler.pkl"
       - key: PYTHONUTF8
         value: "1"
+      - key: CORS_ORIGINS
+        value: "http://localhost:5173,https://sujith574.github.io"
