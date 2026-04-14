@@ -218,7 +218,39 @@ VITE_API_URL=http://localhost:8000
 
 ---
 
-## ✅ Feature Checklist
+## 🚀 Render Deployment Steps (Backend)
+
+Follow these steps to deploy the AICIS backend on Render:
+
+### 1. Create a MongoDB Atlas Cluster (Recommended)
+Since the default mock database resets on every restart, use MongoDB Atlas for permanent storage:
+- Sign up at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+- Create a **Free Shared Cluster**.
+- Add a Database User (record username/password).
+- Add `0.0.0.0/0` to your **IP Access List**.
+- Copy the **Connection String** (e.g., `mongodb+srv://user:pass@cluster.mongodb.net/aicis_db`).
+
+### 2. Deploy on Render
+- Log in to [Render](https://render.com).
+- Click **New +** > **Blueprint**.
+- Connect your GitHub repository (`Sujith574/AICIS`).
+- Render will automatically detect the `render.yaml` file.
+- Update the following **Environment Variables** in the Render Dashboard:
+  - `MONGO_URI`: Your MongoDB Atlas connection string (or leave default for mock).
+  - `SECRET_KEY`: Generate a secure random string.
+  - `CORS_ORIGINS`: Set this to your frontend URL (e.g., `https://sujith574.github.io`).
+- Click **Deploy**.
+
+### 3. Connect Frontend
+- In your frontend project, update the `.env` file:
+  ```env
+  VITE_API_URL=https://your-backend-url.onrender.com
+  ```
+- Rebuild and redeploy your frontend.
+
+---
+
+## 🛠️ Feature Checklist
 
 - [x] Face recognition attendance (OpenCV LBPH)
 - [x] Engagement detection (MediaPipe FaceMesh)

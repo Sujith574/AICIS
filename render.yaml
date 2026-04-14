@@ -3,7 +3,7 @@ services:
     name: aicis-backend
     env: python
     buildCommand: "pip install -r backend/requirements.txt"
-    startCommand: "cd backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+    startCommand: "cd backend && gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT"
     envVars:
       - key: MONGO_URI
         value: "mongodb://localhost:27017" # This won't work on Render if no MongoDB, but we use Mock.

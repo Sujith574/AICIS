@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-_MODEL_PATH  = os.getenv("MODEL_PATH",  "../ml/model.pkl")
-_SCALER_PATH = os.getenv("SCALER_PATH", "../ml/scaler.pkl")
+_MODEL_PATH  = os.getenv("MODEL_PATH",  "../../ml/model.pkl")
+_SCALER_PATH = os.getenv("SCALER_PATH", "../../ml/scaler.pkl")
 
 # Resolve paths relative to this file
 _BASE = os.path.dirname(os.path.abspath(__file__))
