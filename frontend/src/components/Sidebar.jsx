@@ -3,11 +3,12 @@ import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 const NAV = [
-  { to: '/',          icon: '📊', label: 'Dashboard'  },
-  { to: '/students',  icon: '👥', label: 'Students'   },
-  { to: '/session',   icon: '🎥', label: 'Live Session'},
-  { to: '/attendance',icon: '✅', label: 'Attendance' },
-  { to: '/risk',      icon: '⚠️', label: 'Risk Report' },
+  { to: '/',                icon: '📊', label: 'Dashboard'        },
+  { to: '/mark-attendance', icon: '📸', label: 'Mark Attendance', highlight: true },
+  { to: '/students',        icon: '👥', label: 'Students'         },
+  { to: '/attendance',      icon: '✅', label: 'Attendance Log'   },
+  { to: '/session',         icon: '🎥', label: 'Live Session'     },
+  { to: '/risk',            icon: '⚠️', label: 'Risk Report'      },
 ];
 
 export default function Sidebar() {
@@ -32,15 +33,20 @@ export default function Sidebar() {
 
       <nav className="sidebar-nav">
         <div className="nav-section-label">Navigation</div>
-        {NAV.map(({ to, icon, label }) => (
+        {NAV.map(({ to, icon, label, highlight }) => (
           <NavLink
             key={to}
             to={to}
             end={to === '/'}
-            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''} ${highlight ? 'nav-highlight' : ''}`}
           >
             <span>{icon}</span>
             <span>{label}</span>
+            {highlight && <span style={{
+              marginLeft: 'auto', fontSize: 10, fontWeight: 700,
+              background: 'var(--accent-green)', color: '#fff',
+              padding: '2px 6px', borderRadius: 100,
+            }}>NEW</span>}
           </NavLink>
         ))}
       </nav>

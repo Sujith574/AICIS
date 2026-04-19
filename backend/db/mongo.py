@@ -13,6 +13,14 @@ load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 MONGO_DB  = os.getenv("MONGO_DB", "aicis_db")
 
+# Use real Motor if URI is not localhost/default or if explicitly desired
+if "localhost" not in MONGO_URI and "127.0.0.1" not in MONGO_URI:
+    from motor.motor_asyncio import AsyncIOMotorClient
+    USING_MOCK = False
+else:
+    from mongomock_motor import AsyncMongoMockClient as AsyncIOMotorClient
+    USING_MOCK = True
+
 # ── Singleton client ──────────────────────────────────────────────────────────
 class Database:
     client: Optional[AsyncIOMotorClient] = None
@@ -30,7 +38,8 @@ async def connect_db():
     db_instance.client = AsyncIOMotorClient(MONGO_URI)
     db_instance.db = db_instance.client[MONGO_DB]
     await _create_indexes()
-    print(f"✅  Connected to MongoDB: {MONGO_URI} / {MONGO_DB}")
+    status = "MOCK" if USING_MOCK else "REAL"
+    print(f"✅  Connected to MongoDB ({status}): {MONGO_URI} / {MONGO_DB}")
 
 
 async def close_db():

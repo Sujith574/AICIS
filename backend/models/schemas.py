@@ -67,7 +67,6 @@ class StudentOut(BaseModel):
 # ── Sessions ──────────────────────────────────────────────────────────────────
 class SessionCreate(BaseModel):
     subject: str
-    teacher: str
 
 
 class SessionOut(BaseModel):

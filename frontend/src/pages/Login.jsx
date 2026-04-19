@@ -68,8 +68,15 @@ export default function Login() {
           </button>
         </form>
 
-        <div style={{ marginTop: 24, textAlign: 'center' }}>
-          <p className="text-muted">Demo credentials: <strong>teacher</strong> / <strong>teacher123</strong></p>
+        <div style={{
+          marginTop: 24, padding: '16px', background: 'rgba(59,130,246,0.1)',
+          borderRadius: 'var(--radius-md)', border: '1px solid rgba(59,130,246,0.2)',
+          textAlign: 'center'
+        }}>
+          <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 4 }}>Demo Teacher Credentials</p>
+          <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--accent-blue)' }}>
+            teacher <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>/</span> teacher123
+          </div>
         </div>
 
         <div className="divider" />

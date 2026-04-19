@@ -21,7 +21,7 @@ client.interceptors.response.use(
     if (err.response?.status === 401) {
       localStorage.removeItem('aicis_token');
       localStorage.removeItem('aicis_user');
-      window.location.href = '/login';
+      window.location.href = '/#/login';
     }
     return Promise.reject(err);
   }
@@ -53,9 +53,10 @@ export const sessionsAPI = {
 
 // ── Attendance ────────────────────────────────────────────────────────────────
 export const attendanceAPI = {
-  mark:      (session_id, frame_b64) => client.post('/attendance/mark', { session_id, frame_b64 }),
-  list:      (params)                => client.get('/attendance/', { params }),
-  exportCsv: (session_id)            => client.get('/attendance/export-csv', {
+  mark:       (session_id, frame_b64) => client.post('/attendance/mark', { session_id, frame_b64 }),
+  markPhoto:  (session_id, frame_b64) => client.post('/attendance/mark', { session_id, frame_b64 }),
+  list:       (params)                => client.get('/attendance/', { params }),
+  exportCsv:  (session_id)            => client.get('/attendance/export-csv', {
     params:       { session_id },
     responseType: 'blob',
   }),

@@ -61,6 +61,17 @@ async def on_startup():
         })
         print("✅  Default teacher account created (teacher / teacher123)")
 
+    # Ensure at least one mockup student for demo
+    if not await db.students.find_one({}):
+        await db.students.insert_one({
+            "student_id": "STU001",
+            "name": "Demo Student",
+            "email": "student@example.edu",
+            "registered_at": datetime.utcnow(),
+            "registered_by": "teacher"
+        })
+        print("✅  Sample student created for demo")
+
 
 @app.on_event("shutdown")
 async def on_shutdown():
