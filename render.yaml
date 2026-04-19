@@ -2,16 +2,15 @@ services:
   - type: web
     name: aicis-backend
     env: python
-    rootDir: backend
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT"
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "gunicorn --chdir backend -w 2 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT"
     envVars:
       - key: MONGO_URI
-        value: "mongodb://localhost:27017"
+        value: "mongodb://localhost:27017" # Update this in Render Dashboard for persistence
       - key: MONGO_DB
         value: "aicis_db"
       - key: MODEL_PATH
-        value: "../ml/model.pkl"
+        value: "../ml/model.pkl" # Path relative to backend/ directory
       - key: SCALER_PATH
         value: "../ml/scaler.pkl"
       - key: PYTHONUTF8
@@ -21,4 +20,4 @@ services:
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: "480"
       - key: CORS_ORIGINS
-        value: "http://localhost:5173,http://localhost:3000,https://sujith574.github.io"
+        value: "http://localhost:5173,http://localhost:3000,https://sujith574.github.io,https://sujith574.github.io/AICIS"
